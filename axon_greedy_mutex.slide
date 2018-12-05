@@ -3,14 +3,14 @@ AXON Saigon Backend Council
 14 Dec 2018
 
 Hau Ma
-Senior Software Engineer
+Research Engineer Team
 @hauma
 https://medium.com/@hau12a1
 
 * Shared Resource
 - A resource can be accessed by multiple requesters
 
-.image GreedyMutex/resourceprioritize/ResourceCollided.png
+.image GreedyMutex/ResourceCollided.png
 - Resources is limited => Requesters must compete for accessing resource
 
 * What is Mutex
@@ -18,12 +18,12 @@ https://medium.com/@hau12a1
 - Solve *concurrent* access to Resource
 - Requesters compete for accessing resource by getting the Mutex lock
 
-.image GreedyMutex/resourceprioritize/mutex.png
+.image GreedyMutex/mutex.png
 
 * Problem
 - Mutex is "fair" between requesters when competing
 - How can we prioritize requesters when competing
-.image GreedyMutex/resourceprioritize/prioritizedmutex.png
+.image GreedyMutex/prioritizedmutex.png
 
 * Idea
 - Set Requesters priority
@@ -32,7 +32,7 @@ https://medium.com/@hau12a1
 - Allow the requester to access the resource
 
 * Idea(cont.)
-.image GreedyMutex/resourceprioritize/greedymutex.png
+.image GreedyMutex/greedymutex.png
 
 * Greedy Mutex
 - The Mutex's designed for Greedy requesters
