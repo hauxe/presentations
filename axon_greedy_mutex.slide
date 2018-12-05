@@ -1,0 +1,96 @@
+Greedy Mutex An Implementation in Golang
+AXON Saigon Backend Council
+14 Dec 2018
+
+Hau Ma
+Senior Software Engineer
+@hauma
+https://medium.com/@hau12a1
+
+* Shared Resource
+- A resource can be accessed by multiple requesters
+
+.image GreedyMutex/resourceprioritize/ResourceCollided.png
+- Resources is limited => Requesters must compete for accessing resource
+
+* What is Mutex
+- Mutual Exclusion
+- Solve *concurrent* access to Resource
+- Requesters compete for accessing resource by getting the Mutex lock
+
+.image GreedyMutex/resourceprioritize/mutex.png
+
+* Problem
+- Mutex is "fair" between requesters when competing
+- How can we prioritize requesters when competing
+.image GreedyMutex/resourceprioritize/prioritizedmutex.png
+
+* Idea
+- Set Requesters priority
+- Keep a list of Requesters in a specific time frame (1ns, 1ms, ...?)
+- Scan the list to get requester which have highest (top) prioriy
+- Allow the requester to access the resource
+
+* Idea(cont.)
+.image GreedyMutex/resourceprioritize/greedymutex.png
+
+* Greedy Mutex
+- The Mutex's designed for Greedy requesters
+- High prioritized requesters always have access to resource when competing
+
+* But more than Greedy ...
+- Low prioritized requester would a chance to access resource if high prioritized
+one is idle
+=> Maximize resource accessibility 
+
+* Implementation: The Gatekeeper
+
+- The guy have a door key
+- Maintain a list of visitors
+- Sometime look at the list and pick a VIP to give a key
+
+.code -numbers GreedyMutex/resourceprioritize/gatekeeper.go /^type GateKeeper/,/^}
+
+* Implementation: The Gatekeeper
+
+- Start GateKeeper
+
+.code -numbers -edit GreedyMutex/resourceprioritize/gatekeeper.go /^//Start/,/^}
+
+* Implementation: The Gatekeeper
+
+- Queuing for accessing the resource
+
+.code -numbers -edit GreedyMutex/resourceprioritize/gatekeeper.go /^//Register/,/^}
+
+* Implementation: The Prioritized Entity
+
+- A "Contract"
+- How does Gatekeeper get the priority of an entity (requester)?
+- How does Gatekeeper assign resource to an entity (requester)?
+
+.code -numbers GreedyMutex/resourceprioritize/prioritized_entity.go /^type PrioritizedEntity/,/^}
+
+* Implementation: The GreedyMutex
+
+- Keep the queue of concurrent entities
+- Pick an entity with highest priority
+- Assign resource to the entity
+
+.code -numbers GreedyMutex/resourceprioritize/prioritized_entity.go /^type GreedyMutex/,/^}
+* Implementation: The GreedyMutex(Cont.)
+.code -numbers -edit GreedyMutex/resourceprioritize/prioritized_entity.go /^//Compete/,/^//wait until
+* Implementation: The GreedyMutex(Cont.)
+.code -numbers -edit GreedyMutex/resourceprioritize/prioritized_entity.go /^//wait until/,/^}
+
+* Demo
+.code -edit GreedyMutex/main.go /^//PrioritizedEntitySample/,/^//END Sample
+* 
+.play -edit GreedyMutex/main.go /^func main/,/^}
+
+* Redaction Studio Resources
+- Compute the number of available Resources
+- Allow exact calculated connection to the backend (Ghost)
+- Control waste of resource by setting an idle timeout (2 min)
+
+* Q&A
