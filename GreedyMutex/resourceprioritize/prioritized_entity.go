@@ -20,10 +20,10 @@ type GreedyMutex struct {
 }
 
 // Compete compete for resource
-func (mux *GreedyMutex) Compete(ctx context.Context, resource interface{}) {
+func (mux *GreedyMutex) Compete(ctx context.Context, resource interface{}) { // HL
 	mux.Lock()
 	greedyEntities := []PrioritizedEntity{}
-	defer func() { go mux.Compete(ctx, resource) }()
+	defer func() { go mux.Compete(ctx, resource) }() // HL
 	defer mux.Unlock()
 	defer func() { // HL
 		var winner PrioritizedEntity
@@ -37,9 +37,9 @@ func (mux *GreedyMutex) Compete(ctx context.Context, resource interface{}) {
 		}
 	}()
 	// wait until have a request for resource
-	entity := <-mux.queue
-	greedyEntities = append(greedyEntities, entity)
-	c := time.NewTicker(mux.TimeToWait)
+	entity := <-mux.queue // HL
+	greedyEntities = append(greedyEntities, entity) // HL
+	c := time.NewTicker(mux.TimeToWait) // HL
 	for {
 		select {
 		case <-ctx.Done():

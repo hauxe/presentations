@@ -23,10 +23,10 @@ func (k *GateKeeper) Start(resource interface{}, waitTime time.Duration) {
 		k.cancel()
 	}
 	k.ctx, k.cancel = context.WithCancel(context.Background())
-	mux := &GreedyMutex{
-		TimeToWait: waitTime,
-		queue:      k.queue,
-	}
+	mux := &GreedyMutex{ // HL
+		TimeToWait: waitTime, // HL
+		queue:      k.queue, // HL
+	} // HL
 	wg := new(sync.WaitGroup)
 	wg.Add(1)
 	go func() {

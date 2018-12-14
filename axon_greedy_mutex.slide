@@ -22,7 +22,7 @@ https://medium.com/@hau12a1
 
 * Problem
 - Mutex is "fair" between requesters when competing
-- How can we prioritize requesters when competing
+- How can we prioritize requesters when competing?
 .image GreedyMutex/prioritizedmutex.png
 
 * Idea
@@ -47,7 +47,7 @@ one is idle
 
 - The guy have a door key
 - Maintain a list of visitors
-- Sometime look at the list and pick a VIP to give a key
+- Sometime look at the list and pick a VIP and give them the door key
 
 .code -numbers GreedyMutex/resourceprioritize/gatekeeper.go /^type GateKeeper/,/^}
 
@@ -87,10 +87,5 @@ one is idle
 .code -edit GreedyMutex/main.go /^//PrioritizedEntitySample/,/^//END Sample
 * 
 .play -edit GreedyMutex/main.go /^func main/,/^}
-
-* Redaction Studio Resources
-- Compute the number of available Resources
-- Allow exact calculated connection to the backend (Ghost)
-- Control waste of resource by setting an idle timeout (2 min)
 
 * Q&A
